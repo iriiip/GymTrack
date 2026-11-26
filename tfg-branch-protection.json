@@ -1,0 +1,44 @@
+
+{
+  "name": "TFG - Protect main and develop",
+  "target": "branch",
+  "source_type": "Repository",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "exclude": [],
+      "include": [
+        "refs/heads/main",
+        "refs/heads/develop"
+      ] 
+    }
+  },
+  "rules": [
+    {
+      "type": "deletion"
+    },
+    {
+      "type": "non_fast_forward"
+    },
+    {
+      "type": "pull_request",
+      "parameters": {
+        "require_code_owner_review": false,
+        "require_last_push_approval": true,
+        "dismiss_stale_reviews_on_push": true,
+        "required_approving_review_count": 1,
+        "required_review_thread_resolution": true
+      }
+    },
+    {
+      "type": "commit_message_pattern",
+      "parameters": {
+        "name": "Conventional Commits",
+        "negate": false,
+        "pattern": "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\\([\\w.-]+\\))?!?: [\\w][\\w -]*([\\s\\S]*)",
+        "operator": "regex"
+      }
+    }
+  ],
+  "bypass_actors": []
+}
